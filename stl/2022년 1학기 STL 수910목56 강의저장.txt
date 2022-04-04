@@ -1,0 +1,71 @@
+
+
+파일이름: 소스.cpp
+파일크기: 1969
+2022-03-07 10:33:26 GMT+9
+
+//---------------------------------------------------------------------------//
+// 2022년 1학기 STL 3.2 수34		월23수34		(1주 2일)
+//
+// - 강의소개
+// - 교과서 - 사이트 : cppreference.com
+// - 코딩스타일 : google coding convention
+// - 프로젝트 환경 : Release/x64
+//		메뉴 - 프로젝트 - 설정 - C++언어(초안기능)
+// 
+// - save 파일 만들기
+//---------------------------------------------------------------------------//
+
+#include <iostream>
+#include <string_view>
+#include <filesystem>
+#include <chrono>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+using namespace std;	// 이걸 안써야 하겠다
+
+void save(string_view);	//const char*가 아닌 string을 써라
+
+int main()
+{
+	// string과 string_view의 크기를 출력하라
+
+	cout << "string 의 크기 - " << sizeof(string) << endl;
+	cout << "string_view 의 크기 - " << sizeof(string_view) << endl;
+
+	save("소스.cpp");
+}
+
+void save(string_view fname)
+{
+	// 읽을 파일을 연다
+	ifstream in{ fname.data() };	//in.close( ); 이런거 좀 쓰지말라. 자동으로 닫힌다. raii 기능
+
+	// 쓸 파일도 연다
+	ofstream out{ "2022년 1학기 STL 수910목56 강의저장.txt", ios::app };	//ios::app은 쓸때마다 저장되도록 해준다.
+
+
+
+	out << endl << endl;
+
+	// 저장할 파일의 이름을 파일에 출력한다.
+	out << "파일이름: " << fname << endl;
+
+	// 저장할 파일의 크기를 출력한다.(C++17)
+	out << "파일크기: " << filesystem::file_size(fname) << endl;
+
+	// 현재 날짜와 시간을 출력한다.(C++20)
+	auto time = floor<chrono::seconds>(chrono::system_clock::now());	//floor는 바닥까지 라는 뜻으로, floor<chrono::seconds>를 사용하면 밀리초단위를 없앨 수 있다.
+	out << chrono::zoned_time("Asia/Seoul", time) << endl;
+	out << endl;
+
+
+
+	// 읽을 파일의 정보를 읽어 쓸 파일에 덧붙여 쓴다.
+	//1. 파일의 내용을 벡터로 읽어온다
+	vector<char> v{ istreambuf_iterator<char>{in}, {} };	//마지막 {}는 처음부터 끝까지라는 뜻.
+
+	//2. 벡터에 있는 내용을 파일에 복사한다.
+	copy(v.begin(), v.end(), ostream_iterator<char>{ out });
+}
