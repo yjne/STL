@@ -24,15 +24,20 @@ int main()
 
 	//[문제] vector의 메모리가 확장되는 모습을 관찰하고 싶다.
 	// - 원소를 하나씩 추가하면서 벡터가 관리하는 메모리의 크기를 관찰해보면 된다.
+	// 원소를 추가하며 관찰
 
-	cout << "현재 원소 수 - " << v.size() << endl;
-	cout << "벡터의 용량 - " << v.capacity() << endl;
+	size_t old_Cap{ v.capacity()};
 
-	v.push_back(4);
+	while (true) {
+		v.push_back(4);
+		if (v.size()-1 == old_Cap) {
 
-	cout << "현재 원소 수 - " << v.size() << endl;
-	cout << "벡터의 용량 - " << v.capacity() << endl;
-
+			cout << "현재 원소 수 - " << v.size() << endl;
+			cout << "벡터의 용량 - " << v.capacity() << endl;
+			old_Cap = v.capacity();
+			cout << endl;
+		}
+	}
 	save("소스.cpp");
 }
 
