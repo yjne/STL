@@ -20,24 +20,23 @@ extern bool 관찰;
 int main()
 //---------
 {	
-	vector v {1, 2, 3};
+	//[문제] 키보드에서 int를 입력받아
+	// 합계와 평균을 출력하라
 
-	//[문제] vector의 메모리가 확장되는 모습을 관찰하고 싶다.
-	// - 원소를 하나씩 추가하면서 벡터가 관리하는 메모리의 크기를 관찰해보면 된다.
-	// 원소를 추가하며 관찰
+	vector <int> v;
 
-	size_t old_Cap{ v.capacity()};
+	int num;
+	while (cin >> num)
+		v.push_back(num);
 
-	while (true) {
-		v.push_back(4);
-		if (v.size()-1 == old_Cap) {
+	long long sum{ }; //합계는 int로 하지말고 long long을 사용해서 바로바로 넘어가준다.
+	
+	for (int n : v)		//const int &나 int &를 사용해서 원본에 접근하고 복사하지 않도록 하는 것도 좋지만, int는 잘 쓰지 않는다.
+		sum += n;
 
-			cout << "현재 원소 수 - " << v.size() << endl;
-			cout << "벡터의 용량 - " << v.capacity() << endl;
-			old_Cap = v.capacity();
-			cout << endl;
-		}
-	}
+	cout << "합계 - " << sum << endl;
+	cout << "평균 - " << (double)sum / v.size() << endl;
+
 	save("소스.cpp");
 }
 
