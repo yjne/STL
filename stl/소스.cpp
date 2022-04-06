@@ -20,9 +20,19 @@ extern bool 관찰;
 int main()
 //---------
 {	
-	vector<int> v { 1, 2, 3};
+	vector v {1, 2, 3};
 
-	cout << "v의 원소 수 - " << v.size() << endl;	
+	//[문제] vector의 메모리가 확장되는 모습을 관찰하고 싶다.
+	// - 원소를 하나씩 추가하면서 벡터가 관리하는 메모리의 크기를 관찰해보면 된다.
+
+	cout << "현재 원소 수 - " << v.size() << endl;
+	cout << "벡터의 용량 - " << v.capacity() << endl;
+
+	v.push_back(4);
+
+	cout << "현재 원소 수 - " << v.size() << endl;
+	cout << "벡터의 용량 - " << v.capacity() << endl;
+
 	save("소스.cpp");
 }
 
