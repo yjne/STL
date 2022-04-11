@@ -56,7 +56,7 @@ STRING& STRING::operator=(const STRING& other)
 	return *this;
 }
 // 이동생성자/이동할당연산자 2022. 4. 11
-STRING::STRING(STRING&& other) 
+STRING::STRING(STRING&& other)  noexcept
 	: id { ++gid }
 {
 	num = other.num;	//딴놈을 이용해서 이동생성
@@ -69,7 +69,7 @@ STRING::STRING(STRING&& other)
 		print("이동생성");
 };
 
-STRING& STRING::operator=(STRING&& other)
+STRING& STRING::operator=(STRING&& other) noexcept
 {
 	if (this != &other) {
 		if (num)

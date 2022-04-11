@@ -23,6 +23,7 @@ int main()
 	관찰 = true;
 
 	vector <STRING> v;
+	v.reserve(2);
 	
 	v.push_back("333");
 	v.emplace_back("55555");
@@ -30,9 +31,12 @@ int main()
 	save("소스.cpp");
 }
 
-/* 랜덤접근의 시간복잡도는 O(1)이다. emplace_back은 새로운 요수를 컨테이너의 끝에 추가하는 것이다.
-*	emplace_back = Amortized constant, v.emplace_back( STRING("STRING 추가") );를 하면 임시객체까지 만들어서 쓸데없이 5번까지만든다.
-* 그러니 중간의 STRING을 빼고 인자만 넘기는 것이 맞다.
-	new int[10];	//new는 전역함수인 operator new이다.
-	operator new();
+/* 
+* reserve를 사용하면 보다 더 단순해지는 것을 알 수 있다.
+* 생성자(*) [1] 객체:000000EE7E54FB60 자원 -  갯수:3, 주소:000002DADEFEF450
+이동생성 [2] 객체:000002DADEFE6120 자원 -  갯수:3, 주소:000002DADEFEF450
+소멸자 [1] 객체:000000EE7E54FB60 자원 -  없음
+생성자(*) [3] 객체:000002DADEFE6138 자원 -  갯수:5, 주소:000002DADEFEF380
+소멸자 [2] 객체:000002DADEFE6120 자원 -  갯수:3, 주소:000002DADEFEF450
+소멸자 [3] 객체:000002DADEFE6138 자원 -  갯수:5, 주소:000002DADEFEF380
 */
