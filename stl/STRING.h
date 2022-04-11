@@ -22,6 +22,10 @@ public:
 	STRING(const STRING& other);
 	STRING& operator=(const STRING& other);
 
+	// 이동생성자/이동할당연산자 2022. 4. 11
+	STRING(STRING&& other);
+	STRING& operator=(STRING&& other);
+
 	STRING operator+(const STRING& rhs) const;
 
 	// 2022. 4. 4 추가

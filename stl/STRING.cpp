@@ -55,6 +55,38 @@ STRING& STRING::operator=(const STRING& other)
 
 	return *this;
 }
+// 이동생성자/이동할당연산자 2022. 4. 11
+STRING::STRING(STRING&& other) 
+	: id { ++gid }
+{
+	num = other.num;	//딴놈을 이용해서 이동생성
+	p = other.p;
+
+	other.num = 0;
+	other.p = nullptr;
+
+	if (관찰)
+		print("이동생성");
+};
+
+STRING& STRING::operator=(STRING&& other)
+{
+	if (this != &other) {
+		if (num)
+			delete[] p;	//지울게 있다면 지워야지
+
+		num = other.num;
+		p = other.p;
+
+		other.num = 0;
+		other.p = nullptr;
+	}
+
+	if (관찰)
+		print("이동할당");
+
+	return *this;	//아무것도 하지말라는 것
+};
 
 STRING STRING::operator+(const STRING& rhs) const
 {

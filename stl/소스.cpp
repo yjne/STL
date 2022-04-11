@@ -19,18 +19,20 @@ extern bool 관찰;
 //---------
 int main()
 //---------
-{	
-	new int[10];	//new는 전역함수인 operator new이다.
-	operator new();
+{
 	관찰 = true;
 
-	vector <STRING> v{"진짜 벡터를 알아본다"};
+	vector <STRING> v;
 	
-	v.emplace_back("STRING 추가");
+	v.push_back("333");
+	v.emplace_back("55555");
+
 	save("소스.cpp");
 }
 
 /* 랜덤접근의 시간복잡도는 O(1)이다. emplace_back은 새로운 요수를 컨테이너의 끝에 추가하는 것이다.
 *	emplace_back = Amortized constant, v.emplace_back( STRING("STRING 추가") );를 하면 임시객체까지 만들어서 쓸데없이 5번까지만든다.
 * 그러니 중간의 STRING을 빼고 인자만 넘기는 것이 맞다.
+	new int[10];	//new는 전역함수인 operator new이다.
+	operator new();
 */
