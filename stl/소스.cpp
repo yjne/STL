@@ -1,15 +1,22 @@
 //-----------------------------------------------------------------------------
-// 2022. 4. 11 월23							월23수34                  (6주 1일)
+// 2022. 4. 13 수34							월23수34                  (6주 2일)
 // 
 // 컨테이너 - 다른 객체를 저장하는 객체
 // Sequence Container - 원소의 순서를 임의로(자기마음대로) 지정가능
 //		- array		유일하게 크기가 컴파일 타임에 결정되어야 한다.
 //		- vector	dynamic array (실행시간에 크기가 바뀌는 배열)
+//		- deque		double ended queue	벡터와 리스트의 중간단계, contiguous container가 아니다.
+//					벡터보다 더 많은 원소를 저장할 수 있다.
 // 
-// 중간시험 예정 - 4/20(수) (7주 2일) / 과제 마감일 5/11 (수)
+// Associative Container
+// Unordered Associative Container
 //-----------------------------------------------------------------------------
 #include <iostream>
+#include <deque>
+#include <fstream>
+#include <algorithm>
 #include <vector>
+#include <string>
 #include "STRING.h"
 #include "save.h"
 using namespace std;
@@ -20,23 +27,29 @@ extern bool 관찰;
 int main()
 //---------
 {
-	관찰 = true;
-
-	vector <STRING> v;
-	v.reserve(2);
+	// [문제] "소스.cpp"파일의 단어를 deque<string>에 저장하라.
+	// 길이 오름차순으로 정렬하라
+	// 정렬된 결과를 출력하라.
+	ifstream in("소스.cpp");
 	
-	v.push_back("333");
-	v.emplace_back("55555");
+	deque<string> d;
+
+	string s;
+
+	while (in >> s)
+		d.push_front(s);
+
+	sort(d.begin(), d.end(), [](const string& a, const string& b){
+		return	a.length() < b.length(); 
+	});
+	
+
+	for (int i = 0; i < d.size(); ++i)
+		cout << d[i] << endl;
+	cout << endl;
 
 	save("소스.cpp");
 }
 
 /* 
-* reserve를 사용하면 보다 더 단순해지는 것을 알 수 있다.
-* 생성자(*) [1] 객체:000000EE7E54FB60 자원 -  갯수:3, 주소:000002DADEFEF450
-이동생성 [2] 객체:000002DADEFE6120 자원 -  갯수:3, 주소:000002DADEFEF450
-소멸자 [1] 객체:000000EE7E54FB60 자원 -  없음
-생성자(*) [3] 객체:000002DADEFE6138 자원 -  갯수:5, 주소:000002DADEFEF380
-소멸자 [2] 객체:000002DADEFE6120 자원 -  갯수:3, 주소:000002DADEFEF450
-소멸자 [3] 객체:000002DADEFE6138 자원 -  갯수:5, 주소:000002DADEFEF380
 */
